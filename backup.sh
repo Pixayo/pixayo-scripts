@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# backup.sh - Automated backup utility
+# no extra options
+
 # -- Customize section ---------------------------------
 TARGET="$HOME/backups"
 
