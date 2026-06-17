@@ -8,15 +8,11 @@ TARGET="$HOME/backups"
 
 # Directories/Files to backup (absolute paths)
 WHITELIST=(
-    # "$HOME/Documents"                      # Every file under the "Documents" folder
-    # "$HOME/.bashrc"                        # My .bashrc file
     # "$HOME/Images/cat_picture.png"         # My cat picture should be saved too!
 )
 
 # Directories/Files to ignore explicitly (supports wildcards like */folder/*)
 BLACKLIST=(
-    # "*/my_directory_here/*"                # ignore one subdirectory
-    # "*.sh"                                 # ignore .sh files
     # "*/fake_cat_picture_.png"              # ignore fake cat picture
 )
 
@@ -28,6 +24,11 @@ OUTPUT="$TARGET/$BACKUP_NAME"
 
 
 echo "Checking whitelist Entries..."
+
+if [ ${#WHITELIST[@]} -eq 0 ]; then
+    echo "ERROR: Whitelist is empty. Nothing to backup."
+    exit 1
+fi
 
 for dir in "${WHITELIST[@]}"; do
     if [ ! -e "$dir" ]; then
@@ -43,8 +44,17 @@ mkdir -p "$TARGET"
 
 echo "Trying to make: $OUTPUT"
 
-if ! zip -r "$OUTPUT" "${WHITELIST[@]}" -x "${BLACKLIST[@]}"; then
-    echo "ERROR: the zip command failed to make $OUTPUT"
+TAR_OPTS=()
+if [ ${#BLACKLIST[@]} -gt 0 ]; then
+    for item in "${BLACKLIST[@]}"; do
+        TAR_OPTS+=("--exclude=$item")
+    done
+else
+    echo "WARNING: blacklist is empty"
+fi
+
+if ! tar -czf "$OUTPUT" "${TAR_OPTS[@]}" "${WHITELIST[@]}"; then
+    echo "ERROR: the tar command failed to make $OUTPUT"
     exit 1
 else
     echo "Backup done!"

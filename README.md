@@ -15,7 +15,7 @@ A personal collection of shell scripts for system automation and utilities. Thes
 
 | Script | Description | Requirements |
 |--------|-------------|--------------|
-| `backup.sh` | Automated backup utility | `zip`, `date` |
+| `backup.sh` | Automated backup utility | `tar`, `date` |
 | `EOF` | `EOF` | `EOF` |
 
 ## Requirements
