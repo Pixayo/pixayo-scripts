@@ -8,14 +8,16 @@ TARGET="$HOME/backups"
 
 # Directories/Files to backup (absolute paths)
 WHITELIST=(
-    # "$HOME/my/path/here"
+    # "$HOME/Documents"                      # Every file under the "Documents" folder
+    # "$HOME/.bashrc"                        # My .bashrc file
+    # "$HOME/Images/cat_picture.png"         # My cat picture should be saved too!
 )
 
 # Directories/Files to ignore explicitly (supports wildcards like */folder/*)
 BLACKLIST=(
-    # "*/my_directory_here/*"         # ignore one subdirectory
-    # "*.sh"                          # ignore .sh files
-    # "*/cat_picture_231.png"         # ignore cat picture
+    # "*/my_directory_here/*"                # ignore one subdirectory
+    # "*.sh"                                 # ignore .sh files
+    # "*/fake_cat_picture_.png"              # ignore fake cat picture
 )
 
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
@@ -25,7 +27,7 @@ BACKUP_NAME="backup_$TIMESTAMP.zip"
 OUTPUT="$TARGET/$BACKUP_NAME"
 
 
-echo "Checking Whitelist Entries..."
+echo "Checking whitelist Entries..."
 
 for dir in "${WHITELIST[@]}"; do
     if [ ! -e "$dir" ]; then
@@ -42,7 +44,7 @@ mkdir -p "$TARGET"
 echo "Trying to make: $OUTPUT"
 
 if ! zip -r "$OUTPUT" "${WHITELIST[@]}" -x "${BLACKLIST[@]}"; then
-    echo "ERROR: zip failed to make $OUTPUT"
+    echo "ERROR: the zip command failed to make $OUTPUT"
     exit 1
 else
     echo "Backup done!"
