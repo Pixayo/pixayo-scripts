@@ -8,12 +8,12 @@ TARGET="$HOME/backups"
 
 # Directories/Files to backup (absolute paths)
 WHITELIST=(
-    # "$HOME/Images/cat_picture.png"         # My cat picture should be saved too!
+    # EX: "$HOME/Documents"
 )
 
 # Directories/Files to ignore explicitly (supports wildcards like */folder/*)
 BLACKLIST=(
-    # "*/fake_cat_picture_.png"              # ignore fake cat picture
+    # EX: "$HOME/Documents/do-not-backup.txt"
 )
 
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
@@ -50,7 +50,7 @@ if [ ${#BLACKLIST[@]} -gt 0 ]; then
         TAR_OPTS+=("--exclude=$item")
     done
 else
-    echo "WARNING: blacklist is empty"
+    echo "NOTE: blacklist is empty"
 fi
 
 if ! tar -czf "$OUTPUT" "${TAR_OPTS[@]}" "${WHITELIST[@]}"; then
