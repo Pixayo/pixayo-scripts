@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # backup.sh - Automated backup utility
 # no extra options
@@ -53,7 +54,7 @@ else
     echo "NOTE: blacklist is empty"
 fi
 
-if ! tar -czf "$OUTPUT" "${TAR_OPTS[@]}" "${WHITELIST[@]}"; then
+if ! tar -czf "$OUTPUT" "${TAR_OPTS[@]}" "${WHITELIST[@]} --verbose"; then
     echo "ERROR: the tar command failed to make $OUTPUT"
     exit 1
 else
