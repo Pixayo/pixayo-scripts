@@ -54,7 +54,7 @@ else
     echo "NOTE: blacklist is empty"
 fi
 
-if ! tar -czf "$OUTPUT" "${TAR_OPTS[@]}" "${WHITELIST[@]} --verbose"; then
+if ! tar --verbose -czf "$OUTPUT" "${TAR_OPTS[@]}" "${WHITELIST[@]}"; then
     echo "ERROR: the tar command failed to make $OUTPUT"
     exit 1
 else
